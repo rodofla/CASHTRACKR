@@ -1,5 +1,14 @@
 import { z } from 'zod';
 
+// ----- User Schemas -----
+export const UserSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  email: z.email(),
+});
+export type User = z.infer<typeof UserSchema>;
+
+// ----- Authentication Schemas -----
 export const RegisterScheama = z
   .object({
     email: z.email({ message: 'Email no válido' }).min(1, { message: 'El email es obligatorio' }),
@@ -35,13 +44,48 @@ export const ResetPasswordSchema = z
     path: ['password_confirmation'],
   });
 
-export const SuccessSchema = z.object({ message: z.string() });
-export const ErrorResponseSchema = z.object({ error: z.string() });
+export const PasswordValidationSchema = z
+  .string()
+  .min(1, { message: 'El Password es obligatorio' });
 
-export const UserSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  email: z.email(),
+// ----- Expense Schemas -----
+export const DraftExpenseSchema = z.object({
+  name: z.string().min(1, { message: 'El Nombre del gasto es obligatorio' }),
+  amount: z.coerce.number().min(1, { message: 'Cantidad no válida' }),
 });
 
-export type User = z.infer<typeof UserSchema>;
+export const ExpenseAPIResponseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  amount: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  budgetId: z.number(),
+});
+
+export type Expense = z.infer<typeof ExpenseAPIResponseSchema>;
+export type DraftExpense = z.infer<typeof DraftExpenseSchema>;
+
+// ----- Budget Schemas -----
+export const DraftBudgetSchema = z.object({
+  name: z.string().min(1, { message: 'El Nombre del presupuesto es obligatorio' }),
+  amount: z.coerce
+    .number({ message: 'Cantidad no válida' })
+    .min(1, { message: 'Cantidad no válida' }),
+});
+
+export const BudgetAPIResponseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  amount: z.string(),
+  userId: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  expenses: z.array(ExpenseAPIResponseSchema),
+});
+export const BudgetsAPIResponseSchema = z.array(BudgetAPIResponseSchema.omit({ expenses: true }));
+export type Budget = z.infer<typeof BudgetAPIResponseSchema>;
+
+// ----- Response Schemas -----
+export const SuccessSchema = z.object({ message: z.string() });
+export const ErrorResponseSchema = z.object({ error: z.string() });

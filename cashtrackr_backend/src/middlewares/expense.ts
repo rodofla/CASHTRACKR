@@ -1,3 +1,4 @@
+import { BelongsTo } from 'sequelize-typescript';
 import type { Request, Response, NextFunction } from "express";
 import { param, validationResult, body } from "express-validator";
 import Expense from "../models/Expense";
@@ -51,4 +52,13 @@ export const validateExpenseExists = async (req: Request, res: Response, next: N
         //console.error('Error fetching budget:', error)
         return res.status(500).json({ error: 'Internal server error' })
     }
+}
+
+export const BelongsToBudget = async (req: Request, res: Response, next: NextFunction) => {
+    if (req.budget.id !== req.expense.budgetId) {
+        return res.status(403).json({ error: 'Acción no válida' })
+    }
+
+    next()
+    
 }

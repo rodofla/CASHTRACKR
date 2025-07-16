@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Outfit } from "next/font/google";
+import type { Metadata } from 'next';
+import './globals.css';
+import { Outfit } from 'next/font/google';
+import ToastNotification from '@/components/ui/ToastNotification';
 
 const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "Cashtrackr",
-  description: "Your personal finance tracker for managing cash flow and expenses.",
+  title: 'Cashtrackr',
+  description: 'Your personal finance tracker for managing cash flow and expenses.',
 };
 
 export default function RootLayout({
@@ -19,10 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={outfit.className}>
-        {children}
-      </body>
+      <body className={outfit.className}>{children}</body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { BudgetController } from '../controllers/BudgetController'
 import { hasAccessToBudget, validateBudgeExists, validateBudgetId, validateBudgetInput } from '../middlewares/budget'
-import { validateExpensetInput, validateExpenseId, validateExpenseExists } from '../middlewares/expense'
+import { validateExpensetInput, validateExpenseId, validateExpenseExists, BelongsToBudget } from '../middlewares/expense'
 import { ExpensesController } from '../controllers/ExpenseController'
 import { handleInputErrors } from '../middlewares/validation'
 import { authenticate } from '../middlewares/auth'
@@ -17,6 +17,7 @@ router.param('budgetId', hasAccessToBudget) // Check if the user has access to t
 
 router.param('expenseId', validateExpenseId) // Validate the expenseId parameter for all routes that have it
 router.param('expenseId', validateExpenseExists) // Validate if the expense exists for all routes that have it
+router.param('expenseId', BelongsToBudget) // Check if the expense belongs to the budget for all routes that have it
 
 /** ----- Budget routes -----  */
 router.get('/', BudgetController.getAll)
