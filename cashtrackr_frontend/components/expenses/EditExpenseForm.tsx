@@ -39,14 +39,14 @@ export default function EditExpenseForm({ closeModal }: { closeModal: () => void
       }
     };
     fetchExpense();
-  }, []);
+  }, [budgetId, expenseId]);
 
   useEffect(() => {
     if (state.success) {
       toast.success(state.success);
       closeModal();
     }
-  }, [state]);
+  }, [state, closeModal]);
 
   if (isLoading) {
     return (

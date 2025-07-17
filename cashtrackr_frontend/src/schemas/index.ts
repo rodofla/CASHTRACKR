@@ -86,6 +86,23 @@ export const BudgetAPIResponseSchema = z.object({
 export const BudgetsAPIResponseSchema = z.array(BudgetAPIResponseSchema.omit({ expenses: true }));
 export type Budget = z.infer<typeof BudgetAPIResponseSchema>;
 
+// ----- profile Schemas -----
+export const UpdatePasswordSchema = z
+  .object({
+    current_password: z.string().min(1, { message: 'El Password no puede ir vacio' }),
+    password: z.string().min(8, { message: 'El Nuevo Password debe ser de al menos 8 caracteres' }),
+    password_confirmation: z.string(),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: 'Los Passwords no son iguales',
+    path: ['password_confirmation'],
+  });
+
+export const ProfileFormSchema = z.object({
+  name: z.string().min(1, { message: 'Tu Nombre no puede ir vacio' }),
+  email: z.email({ message: 'Email no válido' }).min(1, { message: 'El email es obligatorio' }),
+});
+
 // ----- Response Schemas -----
 export const SuccessSchema = z.object({ message: z.string() });
 export const ErrorResponseSchema = z.object({ error: z.string() });

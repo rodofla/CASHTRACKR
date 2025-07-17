@@ -3,7 +3,7 @@
 import { createBudget } from '@/actions/create-budget-action';
 import { useFormState } from 'react-dom';
 import ErrorMessage from '../ui/ErrorMessage';
-import { use, useEffect } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import BudgetForm from './BudgetForm';
@@ -20,7 +20,7 @@ export default function CreateBudgetForm() {
       toast.success(state.success);
       router.push('/admin');
     }
-  }, [state]);
+  }, [state, router]);
 
   return (
     <form className="mt-10 space-y-3" noValidate action={dispatch}>

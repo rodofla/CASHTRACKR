@@ -46,7 +46,6 @@ export async function editBudget(
   });
 
   const json = await req.json();
-  console.log('Response from editBudget:', json);
 
   if (!req.ok) {
     const { error } = ErrorResponseSchema.parse(json);

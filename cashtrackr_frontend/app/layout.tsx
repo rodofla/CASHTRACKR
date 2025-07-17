@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Outfit } from 'next/font/google';
-import ToastNotification from '@/components/ui/ToastNotification';
 
 const outfit = Outfit({
   subsets: ['latin'],

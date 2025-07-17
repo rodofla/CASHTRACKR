@@ -184,4 +184,26 @@ export class AuthController {
 
     res.status(200).json({ message: "Correct Password" });
   };
+
+  static updateUser = async (req: Request, res: Response) => {
+    const { email, name } = req.body;
+
+    const emailExist = await User.findOne({ where: { email } });
+    console.log(emailExist.id);
+    console.log(req.user.id);
+    if (emailExist && emailExist.id !== req.user.id) {
+      const error = new Error("Email already exists");
+      return res.status(409).json({ error: error.message });
+    }
+
+    try {
+      const Updateduser = await User.findByPk(req.user.id);
+      Updateduser.name = name;
+      Updateduser.email = email;
+      await Updateduser.save();
+      res.status(200).json({ message: "User updated successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
 }

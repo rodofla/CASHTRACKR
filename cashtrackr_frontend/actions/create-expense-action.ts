@@ -2,7 +2,7 @@
 
 import getToken from '@/src/auth/token';
 import { DraftExpenseSchema, ErrorResponseSchema, SuccessSchema } from '@/src/schemas';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 type ActionStateType = {
   errors: string[];

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { toast } from 'react-toastify';
 import { DialogTitle } from '@headlessui/react';
@@ -18,18 +18,18 @@ export default function ConfirmPasswordForm() {
     success: '',
   });
 
+  const closeModal = useCallback(() => {
+    const hideModal = new URLSearchParams(searchParams.toString());
+    hideModal.delete('deleteBudgetId');
+    router.replace(`${pathname}?${hideModal}`);
+  }, [searchParams, router, pathname]);
+
   useEffect(() => {
     if (state.success) {
       toast.success(state.success);
       closeModal();
     }
-  }, [state]);
-
-  const closeModal = () => {
-    const hideModal = new URLSearchParams(searchParams.toString());
-    hideModal.delete('deleteBudgetId');
-    router.replace(`${pathname}?${hideModal}`);
-  };
+  }, [state, closeModal]);
 
   return (
     <>
