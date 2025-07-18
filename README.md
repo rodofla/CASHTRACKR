@@ -53,7 +53,7 @@
 - **Prettier** - Formateador de código
 - **Nodemon** - Recarga automática en desarrollo
 - **ts-node** - Ejecución directa de TypeScript
-- **Supertest** - Testing de HTTP
+- **Supertest** - Test de integración
 
 ## 📁 Estructura del Proyecto
 
